@@ -10,15 +10,23 @@ def ci_mean(x, ci=0.95):
     x = x[~np.isnan(x)]
 
     mean = np.mean(x)
-    sd = np.std(x, ddof=1)
     n = len(x)
-    se = sd / np.sqrt(n)
-
-    alpha = 1 - ci
-    tval = stats.t.ppf(1 - alpha/2, df=n-1)
-
-    lower = mean - tval * se
-    upper = mean + tval * se
+    
+    # If n < 2, we can't compute sd/se/CI (degrees of freedom would be <= 0)
+    if n < 2:
+        sd = np.nan
+        se = np.nan
+        lower = np.nan
+        upper = np.nan
+    else:
+        sd = np.std(x, ddof=1)
+        se = sd / np.sqrt(n)
+        
+        alpha = 1 - ci
+        tval = stats.t.ppf(1 - alpha/2, df=n-1)
+        
+        lower = mean - tval * se
+        upper = mean + tval * se
 
     return {
       "mean": mean,

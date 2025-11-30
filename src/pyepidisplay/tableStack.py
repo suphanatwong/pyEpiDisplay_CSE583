@@ -47,7 +47,7 @@ class TableStack:
         if isinstance(vars, (str, int)):
             vars = [vars]
             
-        # Convert column indices to names if needed
+        # Convert column indices (column poisition) to names if needed
         selected_vars = []
         for v in vars:
             if isinstance(v, int):
@@ -59,7 +59,7 @@ class TableStack:
         if vars_to_factor is not None:
             vars_to_factor_names = []
             for v in vars_to_factor:
-                if isinstance(v, int):
+                if isinstance(v, int): #check if index
                     vars_to_factor_names.append(self.data.columns[v])
                 else:
                     vars_to_factor_names.append(v)
@@ -111,7 +111,7 @@ class TableStack:
             col_data = selected_df[var]
             
             # Handle categorical/factor variables
-            if pd.api.types.is_categorical_dtype(col_data) or pd.api.types.is_object_dtype(col_data):
+            if pd.api.types.is_categorical_dtype(col_data) or pd.api.types.is_object_dtype(col_data):  #isinstance is too strict
                 value_counts = col_data.value_counts()
                 for level, cnt in value_counts.items():
                     row_data[str(level)] = cnt

@@ -9,10 +9,6 @@
 # - P(Wald's test) is the Wald test p-value that evaluates whether the coefficient (log-odds) for that variable differs from 0.
 # - P(LR-test) is the likelihood ratio p value that compares the full model vs a model without that predictor.
 # - The output also provides model fit statistics like the log-likelihood, the number of observations, and the AIC (Akaike Information Criterion).
-# 
-# 
-
-# In[8]:
 
 
 import pandas as pd
@@ -26,7 +22,7 @@ def logistic_display(formula, data):
     Computes both crude and adjusted ORs, 95% CIs, and Wald p-values.
 
     Parameters:
-        formula (str): e.g. 'nausea ~ beefcurry + saltegg + eclair + water'
+        formula (str): e.g. 'nausea ~ beefcurry + saltegg'
         data (pd.DataFrame): dataset
 
     Returns:
@@ -92,18 +88,16 @@ def logistic_display(formula, data):
 
     return pd.DataFrame(results)
 
-#test function
-
+    # Smoke Test
 #read Outbreak data
 import pandas as pd
-df = pd.read_csv('/home/stlp/pyEpiDisplay/src/pyEpiDisplay/datasets')
 
-df_results = logistic_display('nausea ~ beefcurry + saltegg', df)
-print(df_results)
+def test_logistic_display_smoke():
+    df = pd.read_csv('/home/stlp/pyEpiDisplay/src/pyEpiDisplay/datasets')
 
+    df_results = logistic_display('nausea ~ beefcurry + saltegg', df)
 
-# In[ ]:
+    assert isinstance(df_results, pd.DataFrame)
+    assert not df_results.empty
 
-
-
-
+    print(df_results)

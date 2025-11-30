@@ -4,7 +4,25 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def tab1(column, df):
-    df_col = df[column].value_counts(dropna=False).reset_index()
+    if type(column) is not str:
+        raise ValueError("Column name must be a string.")
+    else:
+        pass
+    if type(df) is not pd.DataFrame:
+        raise ValueError("Input data must be a pandas DataFrame.")
+    else:
+        pass
+    if column not in df.columns:
+        raise ValueError("Column is not found in DataFrame.")
+    else:
+        pass
+    for i in df[column]:
+        if pd.isna(i):
+            raise ValueError("Column contains NA values.")
+        else:
+            pass
+
+    df_col = df[column].value_counts(dropna=False).sort_index()
     df_col_1 = df_col.reset_index(column)
     df_col_1.columns = [column, 'Frequency']
     df_col_1 = df_col_1.set_index(column)

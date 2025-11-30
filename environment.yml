@@ -1,0 +1,13 @@
+name: pyepidisplay
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - matplotlib
+  - seaborn
+  - scipy
+  - pandas
+  - pyreadr
+  - pytest
+  - pip
+  - rpy2
